@@ -4,7 +4,11 @@ from transit.writer import Writer
 from transit.reader import Reader
 from io import StringIO
 
-class MyService:    
+class RPCService:
+    def __init__(self, address, port):
+        self.address = address
+        self.port = port
+    
     def echo(self, args):
         reader = Reader("json") # or "msgpack"
         incoming_args = reader.read(StringIO(args)) # Decode args
@@ -14,6 +18,9 @@ class MyService:
         writer.write(incoming_args) # Encode decoded args into the return_value
         return return_value.getvalue()
 
-server = zerorpc.Server(MyService())
-server.bind("tcp://127.0.0.1:10000")
+address = "127.0.0.1"
+port = 10000
+service = RPCService(address, port)
+server = zerorpc.Server(service)
+server.bind(f"tcp://{address}:{port}")
 server.run()
