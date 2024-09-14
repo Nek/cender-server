@@ -4,8 +4,6 @@ from transit.writer import Writer
 from transit.reader import Reader
 from io import StringIO
 
-
-
 class MyService:    
     def echo(self, args):
         reader = Reader("json") # or "msgpack"

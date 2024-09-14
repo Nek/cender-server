@@ -1,2 +1,5 @@
 .aider*
 __pycache__
+.clj-kondo/
+.lsp/
+cender.code-workspace
