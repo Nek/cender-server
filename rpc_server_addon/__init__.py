@@ -20,19 +20,11 @@ def register():
     bpy.utils.register_class(RPCServerToggle)
     bpy.utils.register_class(RPCServerPanel)
     bpy.utils.register_class(RPCService)
-    
-    # Register the start and stop methods of the RPCServer instance
-    bpy.types.Scene.rpc_server_start = rpc_server.start
-    bpy.types.Scene.rpc_server_stop = rpc_server.stop
 
 def unregister():
     bpy.utils.unregister_class(RPCServerToggle)
     bpy.utils.unregister_class(RPCServerPanel)
     bpy.utils.unregister_class(RPCService)
-    
-    # Unregister the start and stop methods
-    del bpy.types.Scene.rpc_server_start
-    del bpy.types.Scene.rpc_server_stop
 
 if __name__ == "__main__":
     register()

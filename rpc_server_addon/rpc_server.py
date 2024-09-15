@@ -15,18 +15,16 @@ class RPCServer:
         return cls._instance
 
     def start(self):
-        scene = bpy.context.scene
-        if not scene.rpc_server_running:
+        if not bpy.context.scene.rpc_server_running:
             self.thread = threading.Thread(target=self._launch_server)
             self.thread.daemon = True
             self.thread.start()
-            scene.rpc_server_running = True
+            bpy.context.scene.rpc_server_running = True
             print("RPC Server started.")
 
     def stop(self):
-        scene = bpy.context.scene
-        if scene.rpc_server_running:
-            scene.rpc_server_running = False
+        if bpy.context.scene.rpc_server_running:
+            bpy.context.scene.rpc_server_running = False
             if self.server:
                 self.server.stop()
             self.server = None
@@ -34,9 +32,8 @@ class RPCServer:
             print("RPC Server stopped.")
 
     def _launch_server(self):
-        scene = bpy.context.scene
-        address = scene.rpc_server_address
-        port = scene.rpc_server_port
+        address = bpy.context.scene.rpc_server_address
+        port = bpy.context.scene.rpc_server_port
         service = RPCService(address, port, blender_workspace)
         self.server = zerorpc.Server(service)
         self.server.bind(f"tcp://{address}:{port}")
