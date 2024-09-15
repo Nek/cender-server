@@ -1,5 +1,5 @@
 import bpy
-from .rpc_server import start, stop
+from . import start, stop
 
 class RPCServerToggle(bpy.types.Operator):
     bl_idname = "wm.rpc_server_toggle"
