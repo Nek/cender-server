@@ -4,3 +4,5 @@ __pycache__
 .lsp/
 cender.code-workspace
 .venv
+.DS_Store
+wheels

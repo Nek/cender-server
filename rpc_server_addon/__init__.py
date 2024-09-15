@@ -1,5 +1,5 @@
 import bpy
-from .server import rpc_server
+
 from .operator import RPCServerToggle
 from .panel import RPCServerPanel
 

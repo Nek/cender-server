@@ -2,7 +2,7 @@ schema_version = "1.0.0"
 
 # Example of manifest file for a Blender extension
 # Change the values according to your extension
-id = "rpc_server_addon"
+id = "rpc_server_extension"
 version = "1.0.0"
 name = "A bridge between Blender and Clojure language."
 tagline = "This is another extension"

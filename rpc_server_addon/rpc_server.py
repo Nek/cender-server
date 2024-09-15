@@ -2,7 +2,7 @@ import bpy
 import zerorpc
 import threading
 from . import blender_workspace
-from .rpc_service import RPCService
+from . import rpc_service
 
 class RPCServer:
     def __init__(self):
@@ -39,4 +39,3 @@ class RPCServer:
             self.server = None
             self.server_thread = None
 
-rpc_server = RPCServer()

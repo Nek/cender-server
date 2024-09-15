@@ -1,3 +1,0 @@
-# pyzmq==26.2.0
-transit-python2==0.8.321
-zerorpc==0.6.3
