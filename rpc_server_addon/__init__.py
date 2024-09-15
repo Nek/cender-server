@@ -4,18 +4,6 @@ from .operator import RPCServerToggle
 from .panel import RPCServerPanel
 from .rpc_service import RPCService
 
-bl_info = {
-    "name": "RPC Server Addon",
-    "author": "Your Name",
-    "version": (1, 0),
-    "blender": (2, 80, 0),
-    "location": "View3D > Sidebar > RPC Server",
-    "description": "RPC Server for Blender",
-    "warning": "",
-    "doc_url": "",
-    "category": "Development",
-}
-
 def register():
     bpy.utils.register_class(RPCServerToggle)
     bpy.utils.register_class(RPCServerPanel)
