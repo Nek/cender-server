@@ -19,10 +19,18 @@ class RPCServerProperties(bpy.types.PropertyGroup):
         max=65535
     )
 
+    @classmethod
+    def register(cls):
+        bpy.utils.register_class(cls)
+        bpy.types.Scene.rpc_server_props = bpy.props.PointerProperty(type=cls)
+
+    @classmethod
+    def unregister(cls):
+        del bpy.types.Scene.rpc_server_props
+        bpy.utils.unregister_class(cls)
+
 def register():
-    bpy.utils.register_class(RPCServerProperties)
-    bpy.types.Scene.rpc_server_props = bpy.props.PointerProperty(type=RPCServerProperties)
+    RPCServerProperties.register()
 
 def unregister():
-    del bpy.types.Scene.rpc_server_props
-    bpy.utils.unregister_class(RPCServerProperties)
+    RPCServerProperties.unregister()
