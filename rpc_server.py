@@ -9,6 +9,7 @@ import zerorpc
 import threading
 from bpy.props import BoolProperty, StringProperty, IntProperty
 import mathutils
+from bpy.utils import register_class, unregister_class
 
 from transit.writer import Writer
 from transit.reader import Reader
@@ -34,7 +35,7 @@ class RPCService:
         reader = Reader("json")  # or "msgpack"
         incoming_fn_args = reader.read(StringIO(fn_args))  # Decode args
         fn, *args = incoming_fn_args
-        print(incoming_fn_args)
+        bpy.ops.wm.report_info(type='INFO', message=f"Calling function: {fn} with args: {args}")
         getattr(sys.modules[__name__], fn)(*args)         
         return_value = StringIO()
         writer = Writer(return_value, "json")  # or "json-verbose", "msgpack"
@@ -54,7 +55,7 @@ class RPCService:
     def echo(self, args):
         reader = Reader("json")  # or "msgpack"
         incoming_args = reader.read(StringIO(args))  # Decode args
-        print(incoming_args)
+        bpy.ops.wm.report_info(type='INFO', message=f"Echo received: {incoming_args}")
         return_value = StringIO()
         writer = Writer(return_value, "json")  # or "json-verbose", "msgpack"
         writer.write(incoming_args)  # Encode decoded args into the return_value
