@@ -9,8 +9,7 @@ import zerorpc
 import threading
 from bpy.props import BoolProperty, StringProperty, IntProperty
 from bpy.utils import register_class, unregister_class
-
-import blender_funcs
+import blender_workspace
 
 from rpc_service import RPCService
 
@@ -22,7 +21,7 @@ def launch_server():
     global server
     address = bpy.context.scene.rpc_server_address
     port = bpy.context.scene.rpc_server_port
-    service = RPCService(address, port, blender_funcs)
+    service = RPCService(address, port, blender_workspace)
     server = zerorpc.Server(service)
     server.bind(f"tcp://{address}:{port}")
     server.run()
