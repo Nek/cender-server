@@ -140,9 +140,8 @@ def register():
         max=65535
     )
     
-    # Set up logging to use Blender's internal logger
-    logging.basicConfig(level=logging.INFO)
-    logging.getLogger().addHandler(bpy.app.handlers.LogHandler())
+    # Set up logging to use Blender's console
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 def unregister():
     bpy.utils.unregister_class(RPCServerToggle)
