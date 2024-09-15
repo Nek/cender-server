@@ -1,6 +1,6 @@
 import bpy
 from bpy.props import BoolProperty, StringProperty, IntProperty
-from . import server
+from .server import rpc_server
 from .operator import RPCServerToggle
 from .panel import RPCServerPanel
 

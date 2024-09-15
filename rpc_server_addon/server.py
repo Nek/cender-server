@@ -4,35 +4,36 @@ import threading
 from . import blender_workspace
 from .rpc_service import RPCService
 
-server = None
-server_thread = None
+class RPCServer:
+    def __init__(self):
+        self.server = None
+        self.server_thread = None
 
-def launch_server():
-    print(f"Starting server.")
-    global server
-    address = bpy.context.scene.rpc_server_address
-    port = bpy.context.scene.rpc_server_port
-    service = RPCService(address, port, blender_workspace)
-    server = zerorpc.Server(service)
-    server.bind(f"tcp://{address}:{port}")
-    server.run()
+    def launch_server(self):
+        print(f"Starting server.")
+        address = bpy.context.scene.rpc_server_address
+        port = bpy.context.scene.rpc_server_port
+        service = RPCService(address, port, blender_workspace)
+        self.server = zerorpc.Server(service)
+        self.server.bind(f"tcp://{address}:{port}")
+        self.server.run()
 
-def server_start():
-    global server_thread
-    if not bpy.context.scene.rpc_server_running:
-        server_thread = threading.Thread(target=launch_server)
-        server_thread.daemon = True
-        server_thread.start()
-        bpy.context.scene.rpc_server_running = True
+    def start(self):
+        if not bpy.context.scene.rpc_server_running:
+            self.server_thread = threading.Thread(target=self.launch_server)
+            self.server_thread.daemon = True
+            self.server_thread.start()
+            bpy.context.scene.rpc_server_running = True
 
-def server_stop():
-    print(f"Stopping server.")
-    global server, server_thread
-    if bpy.context.scene.rpc_server_running:
-        bpy.context.scene.rpc_server_running = False
-        if server:
-            server.stop()
-        if server_thread:
-            server_thread.join()
-        server = None
-        server_thread = None
+    def stop(self):
+        print(f"Stopping server.")
+        if bpy.context.scene.rpc_server_running:
+            bpy.context.scene.rpc_server_running = False
+            if self.server:
+                self.server.stop()
+            if self.server_thread:
+                self.server_thread.join()
+            self.server = None
+            self.server_thread = None
+
+rpc_server = RPCServer()
