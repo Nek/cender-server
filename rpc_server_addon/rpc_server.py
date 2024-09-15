@@ -35,3 +35,6 @@ def stop():
             rpc_server.stop()
         rpc_server = None
 
+# Ensure these functions are available when the module is imported
+__all__ = ['start', 'stop']
+
