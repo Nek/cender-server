@@ -38,3 +38,7 @@ def stop():
 # Ensure these functions are available when the module is imported
 __all__ = ['start', 'stop']
 
+# Explicitly define the functions at the module level
+start = start
+stop = stop
+
