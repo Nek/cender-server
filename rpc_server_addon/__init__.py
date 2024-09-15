@@ -1,19 +1,46 @@
 import bpy
-from .rpc_server import start, stop
+from . import rpc_server
 from .operator import RPCServerToggle
 from .panel import RPCServerPanel, register as panel_register, unregister as panel_unregister
+from .rpc_service import RPCService
+
+bl_info = {
+    "name": "RPC Server Addon",
+    "author": "Your Name",
+    "version": (1, 0),
+    "blender": (2, 80, 0),
+    "location": "View3D > Sidebar > RPC Server",
+    "description": "RPC Server for Blender",
+    "warning": "",
+    "doc_url": "",
+    "category": "Development",
+}
 
 def register():
-    panel_register()
     bpy.utils.register_class(RPCServerToggle)
     bpy.utils.register_class(RPCServerPanel)
+    bpy.utils.register_class(RPCService)
+    panel_register()
+    
+    # Register the start and stop functions
+    bpy.types.Scene.rpc_server_start = rpc_server.start
+    bpy.types.Scene.rpc_server_stop = rpc_server.stop
 
 def unregister():
-    panel_unregister()
     bpy.utils.unregister_class(RPCServerToggle)
     bpy.utils.unregister_class(RPCServerPanel)
+    bpy.utils.unregister_class(RPCService)
+    panel_unregister()
+    
+    # Unregister the start and stop functions
+    del bpy.types.Scene.rpc_server_start
+    del bpy.types.Scene.rpc_server_stop
 
 if __name__ == "__main__":
     register()
 
-__all__ = ['start', 'stop', 'register', 'unregister']
+# Expose start and stop functions at the addon level
+start = rpc_server.start
+stop = rpc_server.stop
+
+__all__ = ['register', 'unregister', 'start', 'stop']
