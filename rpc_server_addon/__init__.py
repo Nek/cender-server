@@ -1,5 +1,6 @@
 import bpy
-from . import rpc_server
+import bpy
+from .rpc_server import rpc_server
 from .operator import RPCServerToggle
 from .panel import RPCServerPanel, register as panel_register, unregister as panel_unregister
 from .rpc_service import RPCService
@@ -23,8 +24,8 @@ def register():
     panel_register()
     
     # Register the start and stop methods of the RPCServer instance
-    bpy.types.Scene.rpc_server_start = rpc_server.rpc_server.start
-    bpy.types.Scene.rpc_server_stop = rpc_server.rpc_server.stop
+    bpy.types.Scene.rpc_server_start = rpc_server.start
+    bpy.types.Scene.rpc_server_stop = rpc_server.stop
 
 def unregister():
     bpy.utils.unregister_class(RPCServerToggle)
@@ -40,7 +41,7 @@ if __name__ == "__main__":
     register()
 
 # Expose start and stop methods at the addon level
-start = rpc_server.rpc_server.start
-stop = rpc_server.rpc_server.stop
+start = rpc_server.start
+stop = rpc_server.stop
 
 __all__ = ['register', 'unregister', 'start', 'stop']
