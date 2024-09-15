@@ -47,8 +47,3 @@ def get_obj_prop(object_name, prop_name):
     if obj is None:                                                                                                                                      
         return f"Object '{object_name}' not found"
     return getattr(obj, prop_name)
-
-def add_cube(name, size=1):
-    bpy.ops.mesh.primitive_cube_add(size=size)
-    bpy.context.object.name = name
-    return bpy.context.object.name
