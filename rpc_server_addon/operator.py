@@ -1,5 +1,5 @@
 import bpy
-from . import start, stop
+from . import rpc_server
 
 class RPCServerToggle(bpy.types.Operator):
     bl_idname = "wm.rpc_server_toggle"
@@ -8,7 +8,7 @@ class RPCServerToggle(bpy.types.Operator):
     def execute(self, context):
         scene = context.scene
         if scene.rpc_server_running:
-            stop()
+            rpc_server.stop()
         else:
-            start()
+            rpc_server.start()
         return {'FINISHED'}

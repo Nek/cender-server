@@ -35,10 +35,6 @@ def stop():
             rpc_server.stop()
         rpc_server = None
 
-# Explicitly export the start and stop functions
-start = start
-stop = stop
-
 # Ensure these functions are available when the module is imported
 __all__ = ['start', 'stop']
 
