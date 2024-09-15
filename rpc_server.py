@@ -14,10 +14,32 @@ from transit.writer import Writer
 from transit.reader import Reader
 from io import StringIO
 
+import sys
+
+def move_object(object_name: str, x: float, y: float, z: float):
+    obj = bpy.data.objects.get(object_name)
+    if obj is None:
+        return f"Object '{object_name}' not found"
+    
+    obj.location = mathutils.Vector((x, y, z))
+    return f"Moved '{object_name}' to position ({x}, {y}, {z})"
+
+
 class RPCService:
     def __init__(self, address, port):
         self.address = address
         self.port = port
+
+    def call_func(self, fn_args):
+        reader = Reader("json")  # or "msgpack"
+        incoming_fn_args = reader.read(StringIO(fn_args))  # Decode args
+        fn, *args = incoming_fn_args
+        print(incoming_fn_args)
+        getattr(sys.modules[__name__], fn)(*args)         
+        return_value = StringIO()
+        writer = Writer(return_value, "json")  # or "json-verbose", "msgpack"
+        writer.write(getattr(sys.modules[__name__], fn)(*args))  # Encode decoded args into the return_value
+        return return_value.getvalue()
 
     def list_objects(self):
         return bpy.data.objects.keys()
@@ -28,14 +50,6 @@ class RPCService:
 
     def eval_code(self, code: str):
         return eval(code)
-
-    def move_object(self, object_name: str, x: float, y: float, z: float):
-        obj = bpy.data.objects.get(object_name)
-        if obj is None:
-            return f"Object '{object_name}' not found"
-        
-        obj.location = mathutils.Vector((x, y, z))
-        return f"Moved '{object_name}' to position ({x}, {y}, {z})"
 
     def echo(self, args):
         reader = Reader("json")  # or "msgpack"
