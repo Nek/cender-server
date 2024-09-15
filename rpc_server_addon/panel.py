@@ -8,9 +8,10 @@ class RPCServerPanel(bpy.types.Panel):
     bl_category = 'RPC Server'
 
     def draw(self, context):
+        global label
         layout = self.layout
-        props = context.scene.rpc_server_props
-        layout.prop(props, "rpc_server_address")
-        layout.prop(props, "rpc_server_port")
+        props = context.scene.rpc_server_settings
         label = "Stop Server" if props.rpc_server_running else "Run Server"
         layout.operator("wm.rpc_server_toggle", text=label)
+        layout.prop(props, "rpc_server_address")
+        layout.prop(props, "rpc_server_port")
