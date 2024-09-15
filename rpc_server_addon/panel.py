@@ -1,5 +1,4 @@
 import bpy
-from bpy.props import BoolProperty, StringProperty, IntProperty
 
 def register():
     bpy.types.Scene.rpc_server_running = bpy.props.BoolProperty(
