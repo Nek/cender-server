@@ -1,5 +1,5 @@
 import bpy
-from . import rpc_server
+from .rpc_server import start, stop
 from .operator import RPCServerToggle
 from .panel import RPCServerPanel, register as panel_register, unregister as panel_unregister
 
@@ -17,5 +17,4 @@ if __name__ == "__main__":
     register()
 
 # Ensure these functions are available when the addon is imported
-start = rpc_server.start
-stop = rpc_server.stop
+__all__ = ['start', 'stop', 'register', 'unregister']
