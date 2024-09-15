@@ -1,8 +1,7 @@
 import bpy
-import bpy
 from .rpc_server import rpc_server
 from .operator import RPCServerToggle
-from .panel import RPCServerPanel, register as panel_register, unregister as panel_unregister
+from .panel import RPCServerPanel
 from .rpc_service import RPCService
 
 bl_info = {
@@ -21,7 +20,6 @@ def register():
     bpy.utils.register_class(RPCServerToggle)
     bpy.utils.register_class(RPCServerPanel)
     bpy.utils.register_class(RPCService)
-    panel_register()
     
     # Register the start and stop methods of the RPCServer instance
     bpy.types.Scene.rpc_server_start = rpc_server.start
@@ -31,7 +29,6 @@ def unregister():
     bpy.utils.unregister_class(RPCServerToggle)
     bpy.utils.unregister_class(RPCServerPanel)
     bpy.utils.unregister_class(RPCService)
-    panel_unregister()
     
     # Unregister the start and stop methods
     del bpy.types.Scene.rpc_server_start

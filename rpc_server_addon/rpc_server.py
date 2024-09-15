@@ -5,9 +5,14 @@ from . import blender_workspace
 from .rpc_service import RPCService
 
 class RPCServer:
-    def __init__(self):
-        self.server = None
-        self.thread = None
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(RPCServer, cls).__new__(cls)
+            cls._instance.server = None
+            cls._instance.thread = None
+        return cls._instance
 
     def start(self):
         scene = bpy.context.scene
@@ -39,11 +44,4 @@ class RPCServer:
 
 # Create a global instance of the RPCServer
 rpc_server = RPCServer()
-
-# Ensure these functions are available when the module is imported
-__all__ = ['rpc_server']
-
-# Explicitly define the start and stop functions at the module level
-start = rpc_server.start
-stop = rpc_server.stop
 
