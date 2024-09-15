@@ -6,3 +6,4 @@ cender.code-workspace
 .venv
 .DS_Store
 wheels
+rpc_server_extension*
