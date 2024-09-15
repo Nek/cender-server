@@ -6,11 +6,11 @@ class RPCServerToggle(bpy.types.Operator):
     bl_label = "Toggle RPC Server"
     
     def execute(self, context):
-        panel = context.scene.rpc_server_panel
-        if panel.rpc_server_running:
+        scene = context.scene
+        if scene.rpc_server_running:
             rpc_server.stop()
-            panel.rpc_server_running = False
+            scene.rpc_server_running = False
         else:
             rpc_server.start()
-            panel.rpc_server_running = True
+            scene.rpc_server_running = True
         return {'FINISHED'}
