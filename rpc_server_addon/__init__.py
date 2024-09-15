@@ -1,9 +1,3 @@
-bl_info = {
-    "name": "RPC Server",
-    "blender": (4, 2, 0),
-    "category": "View"
-}
-
 import bpy
 from bpy.props import BoolProperty, StringProperty, IntProperty
 from . import server
