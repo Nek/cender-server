@@ -28,7 +28,4 @@ class RPCService:
         # print(ret)
         return ret
         
-    def eval_code(self, code: str):
-        return eval(code)
-
 

@@ -33,9 +33,3 @@ class RPCServerProperties(bpy.types.PropertyGroup):
     def unregister(cls):
         del bpy.types.Scene.rpc_server_props
         bpy.utils.unregister_class(cls)
-
-def register():
-    RPCServerProperties.register()
-
-def unregister():
-    RPCServerProperties.unregister()

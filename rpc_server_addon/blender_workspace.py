@@ -19,14 +19,17 @@ class VectorWriter(object):
     def string_rep(a):
         return None
 
+def register_readers(reader):
+    reader.register("blender-vector", VectorReader)
+
+def register_writers(writer):
+    writer.register(mathutils.Vector, VectorWriter)
+
 def move_object(object_name: str, pos):
     obj = bpy.data.objects[object_name]
     obj.location = pos
     print(f"Moved '{object_name}' to position ({pos})")
     return ["move_object", [object_name, pos]]
 
-def register_readers(reader):
-    reader.register("blender-vector", VectorReader)
-
-def register_writers(writer):
-    writer.register(mathutils.Vector, VectorWriter)
+def eval_code(self, code: str):
+    return eval(code)
