@@ -4,15 +4,16 @@ import threading
 from . import blender_workspace
 from .rpc_service import RPCService
 
+
 class RPCServer:
-    _instance = None
+    __instance = None
 
     def __new__(cls):
-        if cls._instance is None:
-            cls._instance = super(RPCServer, cls).__new__(cls)
-            cls._instance.server = None
-            cls._instance.thread = None
-        return cls._instance
+        if cls.__instance is None:
+            cls.__instance = super(RPCServer, cls).__new__(cls)
+            cls.__instance.server = None
+            cls.__instance.thread = None
+        return cls.__instance
 
     def start(self):
         if not bpy.context.scene.rpc_server_running:
