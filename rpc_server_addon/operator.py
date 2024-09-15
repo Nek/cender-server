@@ -1,6 +1,8 @@
 import bpy
 import zerorpc
 import threading
+
+from . import blender_datatypes
 from . import blender_workspace
 from .rpc_service import RPCService
 
@@ -64,7 +66,7 @@ class RPCServerToggle(bpy.types.Operator):
     def _launch_server(self, context):
         address = context.scene.rpc_server_settings.rpc_server_address
         port = context.scene.rpc_server_settings.rpc_server_port
-        service = RPCService(address, port, blender_workspace)
+        service = RPCService(address, port, blender_datatypes, blender_workspace)
         self.server = zerorpc.Server(service)
         self.server.bind(f"tcp://{address}:{port}")
         self.server.run()

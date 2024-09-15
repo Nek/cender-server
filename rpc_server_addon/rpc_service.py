@@ -4,12 +4,12 @@ from transit.reader import Reader
 from io import StringIO
 
 class RPCService:
-    def __init__(self, address, port, workspace):
-        self.ns = workspace.__name__
+    def __init__(self, address, port, datatypes, workspace):
+        self.__workspace__ = workspace.__name__
         self.address = address
         self.port = port
-        self.register_readers = workspace.register_readers
-        self.register_writers = workspace.register_writers
+        self.register_readers = datatypes.register_readers
+        self.register_writers = datatypes.register_writers
 
     def call_fn(self, fn_args):
         reader = Reader("json")
@@ -17,7 +17,7 @@ class RPCService:
         incoming_fn_args = reader.read(StringIO(fn_args))  # Decode args
         fn, *args = incoming_fn_args
         # print(f"Calling function: {fn} with args: {args}")
-        res = getattr(sys.modules[self.ns], fn)(*args)    
+        res = getattr(sys.modules[self.__workspace__], fn)(*args)    
     
         return_value = StringIO()
         writer = Writer(return_value, "json")

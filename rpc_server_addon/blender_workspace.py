@@ -1,35 +1,29 @@
-import mathutils
 import bpy
+import sys
+import mathutils
 
-class VectorReader(object):
-    @staticmethod
-    def from_rep(v):
-        return mathutils.Vector(v)
+def move_object(object_name, pos):
+    obj = bpy.data.objects.get(object_name)                                                                                                              
+    if obj is None:                                                                                                                                      
+        return f"Object '{object_name}' not found"                                                                                                                        
+    obj.location = pos                                                                                                          
+    return f"Moved '{object_name}' to position ({pos.x}, {pos.y}, {pos.z})"
 
-class VectorWriter(object):
-    @staticmethod
-    def tag(a):
-        return 'blender-vector'
+def set_obj_prop(object_name, prop_name, value):
+    obj = bpy.data.objects.get(object_name)                                                                                                              
+    if obj is None:                                                                                                                                      
+        return f"Object '{object_name}' not found"
+    setattr(obj, prop_name, value)
+    return f"Set '{prop_name} of '{object_name}' to '{value}'"
 
-    @staticmethod
-    def rep(a):
-        return a[:]
-
-    @staticmethod
-    def string_rep(a):
-        return None
-
-def register_readers(reader):
-    reader.register("blender-vector", VectorReader)
-
-def register_writers(writer):
-    writer.register(mathutils.Vector, VectorWriter)
-
-def move_object(object_name: str, pos):
-    obj = bpy.data.objects[object_name]
-    obj.location = pos
-    print(f"Moved '{object_name}' to position ({pos})")
-    return ["move_object", [object_name, pos]]
-
-def eval_code(self, code: str):
+def eval_code(code):
     return eval(code)
+
+def import_ns(name):
+    setattr(sys.modules[__name__], name, __import__(name))
+
+def set_var(name, val):
+    setattr(sys.modules[__name__], name, val)
+
+def get_var(name):
+    return getattr(sys.modules[__name__], name)
