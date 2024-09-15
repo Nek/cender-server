@@ -9,8 +9,6 @@ class RPCServerToggle(bpy.types.Operator):
         scene = context.scene
         if scene.rpc_server_running:
             rpc_server.stop()
-            scene.rpc_server_running = False
         else:
             rpc_server.start()
-            scene.rpc_server_running = True
         return {'FINISHED'}
