@@ -3,3 +3,4 @@ __pycache__
 .clj-kondo/
 .lsp/
 cender.code-workspace
+.venv

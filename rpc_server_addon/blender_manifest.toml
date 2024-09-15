@@ -1,0 +1,38 @@
+schema_version = "1.0.0"
+
+# Example of manifest file for a Blender extension
+# Change the values according to your extension
+id = "rpc_server_addon"
+version = "1.0.0"
+name = "A bridge between Blender and Clojure language."
+tagline = "This is another extension"
+maintainer = "Nikita (Anatolievich) Dudnik <nikdudnik@gmail.com>"
+type = "add-on"
+
+# Optional link to documentation, support, source files, etc
+# website = "http://extensions.blender.org/add-ons/my-example-package/"
+
+tags = ["Integration", "Clojure"]
+
+blender_version_min = "4.2.0"
+license = [
+  "SPDX:MIT",
+]
+copyright = [
+  "2024 Nikita (Anatolievich) Dudnik",
+]
+
+# Optional: bundle 3rd party Python modules.
+# https://docs.blender.org/manual/en/dev/extensions/python_wheels.html
+# wheels = [
+#   "./wheels/hexdump-3.3-py3-none-any.whl",
+#   "./wheels/jsmin-3.0.1-py3-none-any.whl"
+# ]
+
+# Optional: build setting.
+# https://docs.blender.org/manual/en/dev/extensions/command_line_arguments.html#command-line-args-extension-build
+# [build]
+# paths_exclude_pattern = [
+#   "/.git/"
+#   "__pycache__/"
+# ]
