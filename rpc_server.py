@@ -10,7 +10,6 @@ import threading
 from bpy.props import BoolProperty, StringProperty, IntProperty
 import mathutils
 from bpy.utils import register_class, unregister_class
-import logging
 
 from transit.writer import Writer
 from transit.reader import Reader
@@ -32,40 +31,23 @@ class RPCService:
         self.address = address
         self.port = port
 
-    def call_func(self, fn_args):
+    def call_fn(self, fn_args):
         reader = Reader("json")  # or "msgpack"
         incoming_fn_args = reader.read(StringIO(fn_args))  # Decode args
         fn, *args = incoming_fn_args
-        logging.info(f"Calling function: {fn} with args: {args}")
-        getattr(sys.modules[__name__], fn)(*args)         
+        print(f"Calling function: {fn} with args: {args}")
+        res = getattr(sys.modules[__name__], fn)(*args)         
         return_value = StringIO()
         writer = Writer(return_value, "json")  # or "json-verbose", "msgpack"
-        writer.write(getattr(sys.modules[__name__], fn)(*args))  # Encode decoded args into the return_value
+        writer.write(res)  # Encode decoded args into the return_value
         return return_value.getvalue()
 
-    def list_objects(self):
-        return bpy.data.objects.keys()
-    
-    def import_obj(self, path: str):
-        status = bpy.ops.import_scene.obj(filepath=path)
-        return "OK"
-
-    def eval_code(self, code: str):
-        return eval(code)
-
-    def echo(self, args):
-        reader = Reader("json")  # or "msgpack"
-        incoming_args = reader.read(StringIO(args))  # Decode args
-        logging.info(f"Echo received: {incoming_args}")
-        return_value = StringIO()
-        writer = Writer(return_value, "json")  # or "json-verbose", "msgpack"
-        writer.write(incoming_args)  # Encode decoded args into the return_value
-        return return_value.getvalue()
 
 server = None
 server_thread = None
 
 def launch_server():
+    print(f"Starting server.")
     global server
     address = bpy.context.scene.rpc_server_address
     port = bpy.context.scene.rpc_server_port
@@ -83,6 +65,7 @@ def server_start():
         bpy.context.scene.rpc_server_running = True
 
 def server_stop():
+    print(f"Stopping server.")
     global server, server_thread
     if bpy.context.scene.rpc_server_running:
         bpy.context.scene.rpc_server_running = False
@@ -139,9 +122,6 @@ def register():
         min=1024,
         max=65535
     )
-    
-    # Set up logging to use Blender's console
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 def unregister():
     bpy.utils.unregister_class(RPCServerToggle)
